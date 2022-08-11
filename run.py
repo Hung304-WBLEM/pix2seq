@@ -155,6 +155,7 @@ def perform_training(config, datasets, tasks, train_steps, steps_per_loop,
 
     @tf.function
     def train_multiple_steps(data_iterators, tasks):
+      print('here')
       train_step = lambda xs, ts=tasks: trainer.train_step(xs, ts, strategy)
       for _ in tf.range(steps_per_loop):  # using tf.range prevents unroll.
         with tf.name_scope(''):  # prevent `while_` prefix for variable names.

@@ -21,6 +21,10 @@ import operator
 from typing import Callable
 import ml_collections
 
+import resource
+low, high = resource.getrlimit(resource.RLIMIT_NOFILE)
+resource.setrlimit(resource.RLIMIT_NOFILE, (high, high))
+
 import registry
 import tensorflow as tf
 import tensorflow_datasets as tfds
