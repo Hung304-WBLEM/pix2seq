@@ -155,8 +155,9 @@ def perform_training(config, datasets, tasks, train_steps, steps_per_loop,
 
     @tf.function
     def train_multiple_steps(data_iterators, tasks):
-      print('here')
       train_step = lambda xs, ts=tasks: trainer.train_step(xs, ts, strategy)
+
+      steps_per_loop = 5
       for _ in tf.range(steps_per_loop):  # using tf.range prevents unroll.
         with tf.name_scope(''):  # prevent `while_` prefix for variable names.
           strategy.run(train_step, ([next(it) for it in data_iterators],))
@@ -165,6 +166,8 @@ def perform_training(config, datasets, tasks, train_steps, steps_per_loop,
     cur_step = global_step.numpy()
     timestamp = time.time()
     while cur_step < train_steps:
+      if cur_step == 5:
+        break
       with summary_writer.as_default():
         train_multiple_steps(data_iterators, tasks)
         trainer.check_checkpoint_restored()
