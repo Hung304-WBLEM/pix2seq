@@ -232,7 +232,6 @@ def build_strategy(use_tpu, master):
     strategy = tf.distribute.TPUStrategy(cluster)
   else:  # For (multiple) GPUs.
     cross_device_ops = None  # tf.distribute.NcclAllReduce() by default
-    cross_device_ops = tf.distribute.HierarchicalCopyAllReduce()
     # if the default cross_device_ops fails, try either of the following two
     # by uncommenting it.
     # cross_device_ops = tf.distribute.HierarchicalCopyAllReduce()

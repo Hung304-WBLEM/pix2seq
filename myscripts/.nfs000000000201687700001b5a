@@ -1,11 +1,8 @@
 cd ..
 
-module load cudatoolkit/11.3
-export TFDS_DATA_DIR='/home/hqvo2/tensorflow_datasets'
-
 python3 run.py \
     --mode=train \
-    --model_dir=model_dir \
+    --model_dir=/tmp/model_dir \
     --config=configs/config_det_finetune.py \
     --config.dataset.coco_annotations_dir=datasets/mscoco/annotations \
     --config.train.batch_size=8 \
