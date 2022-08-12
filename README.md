@@ -53,6 +53,25 @@ The following setup is required before running the code.
 ```
 git clone https://github.com/google-research/pix2seq.git
 pip install -r requirements.txt
+
+# For maui
+conda create --name pix2seq python=3.7 # Newer python versions cause bad file descriptor on program exit
+conda activate pix2seq
+conda install -c conda-forge cudatoolkit=11.3 cudnn=8.4.1
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+pip install --upgrade pip
+pip install tensorflow
+
+tensorflow                2.9.1                    pypi_0    pypi
+tensorflow-addons         0.17.1                   pypi_0    pypi
+tensorflow-datasets       4.6.0                    pypi_0    pypi
+tensorflow-estimator      2.9.0                    pypi_0    pypi
+tensorflow-io-gcs-filesystem 0.26.0                   pypi_0    pypi
+tensorflow-metadata       1.9.0                    pypi_0    pypi
+
+python3 -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 ```
 
 Download COCO annotations if neccesary (note that COCO images will be automatically downloaded by [TFDS](https://www.tensorflow.org/datasets)).
